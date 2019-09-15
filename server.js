@@ -34,6 +34,35 @@ app.get('/', (request, response) => {
         welcomeMessage: 'welcome to my first website',
     });
 });
-app.listen(3000, () => {
-    console.log('running on 3000')
+
+const MongoClient = require('mongodb').MongoClient;
+
+// MongoClient.connect('mongodb://localhost:27017/mydb', (err, db) => {
+//     if (err) {
+//         return console.log('unable to connect to mongodb server');
+//     }
+//     console.log('connected to mongodb', db);
+//     db.collection('cities').insertOne({
+//         test11: 11,
+//         test244: 22,
+//     }, (err, res) => {
+//         console.log(88888888888, err, res)
+//     })
+//     db.close();
+// });
+
+var url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db("mydb22");
+    var myobj = {name: "Company Inc", address: "Highway 37"};
+    dbo.collection("customers").insertOne(myobj, function (err, res) {
+        // if (err) throw err;
+        console.log("1 document inserted");
+        db.close();
+    });
 });
+// app.listen(3000, () => {
+//     console.log('running on 3000')
+// });
